@@ -1,3 +1,5 @@
+use rand::{seq::SliceRandom, thread_rng};
+
 #[derive(Debug)]
 pub struct Deck {
     cards: Vec<String>,
@@ -17,5 +19,11 @@ impl Deck {
         Deck { cards }
     }
 
-    pub fn shuffle(&self) {}
+    pub fn shuffle(&mut self) {
+        let mut rng = thread_rng();
+        self.cards.shuffle(&mut rng)
+    }
+    pub fn deal(&mut self, num_cards: usize) -> Vec<String> {
+        self.cards.split_off(self.cards.len() - num_cards)
+    }
 }
